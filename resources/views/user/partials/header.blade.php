@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Trang chủ</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Phim đang chiếu</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Phim sắp chiếu</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Rạp phim</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Tra cứu vé</a></li>
             </ul>
