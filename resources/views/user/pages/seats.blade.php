@@ -39,21 +39,26 @@
             <div class="d-flex flex-column align-items-center mb-4">
                 @php $seatIndex = 1; @endphp
                 @for($row = 0; $row < $rows; $row++)
-                    <div class="d-flex mb-2">
-                        <span class="me-2">{{ chr(65 + $row) }}</span> {{-- A, B, C --}}
-                        @for($col = 1; $col <= $seatsPerRow; $col++)
-                            @if($seatIndex <= $totalSeats)
-                                @php $seat_number = chr(65 + $row) . $col; @endphp
-                                <div class="seat mx-1 {{ in_array($seatIndex, $bookedSeats) ? 'booked' : '' }}"
-                                    data-seat="{{ $seatIndex }}">
-                                    <i class="fa-solid fa-couch"></i>
-                                </div>
+    <div class="d-flex mb-2">
+        <span class="me-2">{{ chr(65 + $row) }}</span> {{-- A, B, C --}}
+        @for($col = 1; $col <= $seatsPerRow; $col++)
+            @if($seatIndex <= $totalSeats)
+                @php 
+                    $seat_number = chr(65 + $row) . $col; 
+                @endphp
+                <div class="seat mx-1 {{ in_array($seatIndex, $bookedSeats) ? 'booked' : '' }}"
+                    data-seat="{{ $seatIndex }}" 
+                    data-seat-label="{{ $seat_number }}" 
+                    data-bs-toggle="tooltip" 
+                    title="{{ $seat_number }}">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                @php $seatIndex++; @endphp
+            @endif
+        @endfor
+    </div>
+@endfor
 
-                                @php $seatIndex++; @endphp
-                            @endif
-                        @endfor
-                    </div>
-                @endfor
             </div>
 
             {{-- Input hidden --}}
@@ -183,6 +188,10 @@
                     modal.show();
                 }
             });
+            // Bootstrap tooltip init
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el))
+
         });
     </script>
 

@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 class HomeUserController extends Controller
 {
     public function index(){
-        $movies = Movie::where('status_movie', 0)->take(8)->get();
+        $movies = Movie::where('status_movie', 0)->get();
+        $moviesComing = Movie::where('status_movie', 2)->get();
         $cities = City::all();
-        return view('user.pages.home', compact('movies', 'cities'));
+        return view('user.pages.home', compact('movies', 'cities','moviesComing'));
     }
 }

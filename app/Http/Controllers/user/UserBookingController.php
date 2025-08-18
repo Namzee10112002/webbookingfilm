@@ -20,36 +20,38 @@ class UserBookingController
     // Bước 1: chọn thành phố
     public function selectCity($movieId)
     {
-        $movie = Movie::findOrFail($movieId);
-        $cities = City::all();
+        $movie = Movie::where('status_movie',0)->findOrFail($movieId);
+        $cities = City::where('status_city',0)->all();
         return view('user.pages.select_city', compact('movie', 'cities'));
     }
 
     // Bước 2: hiển thị rạp chiếu trong city
     public function showTheaters(Request $request, $movieId, $cityId)
     {
-        $movie = Movie::findOrFail($movieId);
-        $city = City::findOrFail($cityId);
-        $companies = TheaterCompany::all();
+        $movie = Movie::where('status_movie',0)->findOrFail($movieId);
+        $city = City::where('status_city',0)->findOrFail($cityId);
+        $companies = TheaterCompany::where('status_company',0)->all();
 
         $date = $request->input('date', Carbon::today()->toDateString());
         // Rạp trong city
         $theaters = MovieTheater::with('company')
             ->where('city_id', $cityId)
+            ->where('status_theater', 0)
             ->get();
 
         foreach ($theaters as $theater) {
             $shows = MovieShow::where('movie_id', $movieId)
                 ->whereHas('room', function ($q) use ($theater) {
                     $q->where('theater_id', $theater->id);
+                    $q->where('status_room', 0);
                 })
+                ->where('status_show',0)
                 ->whereDate('time_start', $date)
                 ->when($date == Carbon::today()->toDateString(), function ($q) {
                     $q->where('time_start', '>', Carbon::now());
                 })
                 ->with('room')
                 ->get();
-
 
             foreach ($shows as $show) {
                 $totalSeats   = $show->room->seat ?? 0;
@@ -65,7 +67,7 @@ class UserBookingController
 
     public function chooseSeats($showId)
     {
-        $show = MovieShow::with(['room.theater'])->findOrFail($showId);
+        $show = MovieShow::with(['room.theater'])->where('status_show',0)->findOrFail($showId);
 
         $totalSeats = $show->room->seat;
         $seatsPerRow = 20;
@@ -143,7 +145,7 @@ class UserBookingController
                 $momoResponse = UserPaymentController::callMomoPayment($totalPrice);
 
                 if (isset($momoResponse['payUrl'])) {
-                    return redirect()->route('home')->with('momo_pay_url', $momoResponse['payUrl']);
+                    return redirect()->route('home')->with('momo_pay_url', $momoResponse['payUrl'])->with('success', $order->id);
                 } else{
                     return redirect()->back()->with('error', 'Có lỗi xảy ra khi tạo liên kết thanh toán.');
                 }
