@@ -166,6 +166,6 @@ class UserBookingController
             }
         }
 
-        return redirect()->route('home')->with('success', 'Đặt vé thành công!');
+        return redirect()->route('home')->with('success-order', $order->id);
     }
 }
