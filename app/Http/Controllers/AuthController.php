@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function index(Request $request)
     {
-       $form = $request->get('form', 'login');
+        $form = $request->get('form', 'login');
         return view('user.pages.auth', compact('form'));
     }
 
@@ -33,9 +33,16 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect('/')->with('success', 'Đăng nhập thành công!');
+            if (Auth::user()->status == 1) {
+                Auth::logout();
+                return back()->with('error', 'Tài khoản của bạn đã bị khóa')->with('activeForm', 'login');
+            }
+            if (Auth::user()->role == 0) {
+                return redirect('/')->with('success', 'Đăng nhập thành công!');
+            }else{
+                return redirect('/admin')->with('success', 'Đăng nhập thành công!');
+            }
         }
-
         return back()->with('error', 'Email hoặc mật khẩu không đúng')->with('activeForm', 'login');
     }
 
@@ -68,7 +75,7 @@ class AuthController extends Controller
             'phone'    => $request->phone,
             'password' => Hash::make($request->password),
             'role'     => 0,
-            'status'   => 1,
+            'status'   => 0,
         ]);
 
         return redirect()->route('auth')->with('success', 'Đăng ký thành công! Bạn có thể đăng nhập')->with('activeForm', 'login');

@@ -23,7 +23,7 @@ class UserCompanyController extends Controller
     // xem 1 hãng rạp
     public function show(TheaterCompany $company)
     {
-        $cities = City::all();
+        $cities = City::where('status_city', 0)->get();
         return view('user.pages.company-detail', compact('company', 'cities'));
     }
 
@@ -32,7 +32,10 @@ class UserCompanyController extends Controller
     {
         $theaters = MovieTheater::where('company_id', $company->id)
             ->where('city_id', $request->city_id)
-            ->where('city_id', $request->city_id)
+            ->where('status_theater', 0)
+            ->whereHas('company', function ($q) {
+                $q->where('status_company', 0);
+            })
             ->get();
         return response()->json($theaters);
     }
@@ -60,6 +63,7 @@ class UserCompanyController extends Controller
             $q->where('theater_id', $theaterId);
         })
         ->whereDate('time_start', $date)
+        ->where('status_show', 0)
         ->orderBy('time_start')
         ->get();
 

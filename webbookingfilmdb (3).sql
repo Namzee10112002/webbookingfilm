@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2025 at 06:42 AM
+-- Generation Time: Aug 18, 2025 at 10:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,14 +54,14 @@ CREATE TABLE `cache_locks` (
 CREATE TABLE `cities` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name_city` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0
+  `status_city` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cities`
 --
 
-INSERT INTO `cities` (`id`, `name_city`, `status`) VALUES
+INSERT INTO `cities` (`id`, `name_city`, `status_city`) VALUES
 (1, 'Hà Nội', 0),
 (2, 'Hồ Chí Minh', 0),
 (3, 'Đà Nẵng', 0),
@@ -71,7 +71,9 @@ INSERT INTO `cities` (`id`, `name_city`, `status`) VALUES
 (7, 'Huế', 0),
 (8, 'Vũng Tàu', 0),
 (9, 'Quy Nhơn', 0),
-(10, 'Đà Lạt', 0);
+(10, 'Đà Lạt', 0),
+(11, 'Đắk Lắk', 0),
+(12, 'Đắk Lắk1', 0);
 
 -- --------------------------------------------------------
 
@@ -173,7 +175,7 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id`, `name_movie`, `description_movie`, `image_movie`, `date_release`, `categories`, `actors`, `director`, `duration`, `rate`, `likes`, `country`, `trailer`, `status_movie`) VALUES
-(1, 'Leaving Mom', 'A young street barber caring for his Alzheimer’s-stricken mother must decide between his duty and his personal life, leading him to travel to South Korea to secure her future.', 'https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/m/m/mm_b_poster_teaser2_fa_70x100cm_digital_1_.jpg', '2025-08-28', 'Drama, Family', 'Hong Dao, Tuan Tran, Jung Il-woo, Juliet Bao Ngoc, Quoc Khanh, Hai Trieu, Lam Vy Da, Vinh Rau', 'Mo Hong-jin', 125, NULL, 0, 'Vietnam', '<iframe width=\"1258\" height=\"527\" src=\"https://www.youtube.com/embed/TnhVMe7XkXI\" title=\"Mang Mẹ Đi Bỏ | Leaving Mom | Official Trailer | EngSub\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>', 0),
+(1, 'Leaving Mom', 'A young street barber caring for his Alzheimer’s-stricken mother must decide between his duty and his personal life, leading him to travel to South Korea to secure her future.', 'https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/m/m/mm_b_poster_teaser2_fa_70x100cm_digital_1_.jpg', '2025-08-28', 'Drama, Family', 'Hong Dao, Tuan Tran, Jung Il-woo, Juliet Bao Ngoc, Quoc Khanh, Hai Trieu, Lam Vy Da, Vinh Rau', 'Mo Hong-jin', 125, 3, 2, 'Vietnam', '<iframe width=\"1258\" height=\"527\" src=\"https://www.youtube.com/embed/TnhVMe7XkXI\" title=\"Mang Mẹ Đi Bỏ | Leaving Mom | Official Trailer | EngSub\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>', 0),
 (2, 'Detective Conan: One-Eyed Flashback', 'Conan and the detectives are drawn into a mystery tied to Inspector Kansuke Yamato’s past.', 'https://tse3.mm.bing.net/th/id/OIP.tkmetEN1KlDRPZjlyYa2QgHaKe?pid=Api&P=0&h=180', '2025-04-18', 'Animation, Action, Mystery, Thriller', 'Minami Takayama, Wakana Yamazaki, Rikiya Koyama, Megumi Hayashibara, Yuji Takada, Show Hayami', 'Katsuya Shigehara', 110, NULL, 0, 'Japan', '<iframe width=\"1088\" height=\"612\" src=\"https://www.youtube.com/embed/OhamdzseR4o\" title=\"DETECTIVE CONAN: ONE-EYED FLASHBACK - Official Trailer - In Cinemas July 31, 2025\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; g<iframe width=\"1088\" height=\"612\" src=\"https://www.youtube.com/embed/OhamdzseR4o\" title=\"DETECTIVE CONAN: ONE-EYED FLASHBACK - Official Trailer - In Cinemas July 31, 2025\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>', 0),
 (3, 'Ne Zha 2', 'The rebellious young demigod Ne Zha and his friend Ao Bing undergo perilous trials to reclaim their bodies and save their realm from darkness.', 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2025/02/67a5be60e4b02ecf690bb1db.jpg', '2025-01-29', 'Animation, Fantasy, Adventure', 'Lü Yanting, Han Mo, Lu Qi, Zhang Jiaming, Wang Deshun, Zhuo Yongxi', 'Yu Yang (Jiaozi)', 144, NULL, 0, 'China', '<iframe width=\"1088\" height=\"612\" src=\"https://www.youtube.com/embed/ETlOSBR92Fs\" title=\"Ne Zha 2 | Official Trailer HD | A24\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>', 0),
 (4, 'The 4 Rascals', 'A comedic tale of four friends who concoct a plan to resolve a love triangle, only to complicate matters further.', 'https://d32qys9a6wm9no.cloudfront.net/images/movies/poster/06/fc13e66fb792b70011d0dbad6802c5c0_original.jpg?t=1741771611', '2025-01-29', 'Comedy, Romance', 'Tran Thanh, Le Duong Bao Lam, Le Giang, Uyen An, Quoc Anh, Tieu Vy, Ky Duyen', 'Tran Thanh', 132, NULL, 0, 'Vietnam', '<iframe width=\"1258\" height=\"527\" src=\"https://www.youtube.com/embed/5XkPSahQSfk\" title=\"The 4 Rascals (Bộ Tứ Báo Thủ) Movie Trailer | March 14\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>', 0),
@@ -207,7 +209,8 @@ INSERT INTO `movie_comments` (`id`, `user_id`, `content_comment`, `date_comment`
 (6, 1, 'Ne Zha phần 2 còn hay hơn phần 1.', '2025-08-16 11:09:58', 3, 1),
 (7, 1, 'Xem mà cười đau bụng, Trấn Thành quá duyên.', '2025-08-16 11:09:58', 4, 1),
 (8, 1, 'Phim giải trí nhẹ nhàng, đáng để xem.', '2025-08-16 11:09:58', 4, 1),
-(9, 2, 'Phim hay vờ lờ', '2025-08-16 11:27:53', 1, 0);
+(9, 2, 'Phim hay vờ lờ', '2025-08-16 11:27:53', 1, 0),
+(10, 1, 'Hay vãi', '2025-08-18 14:43:05', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -226,8 +229,8 @@ CREATE TABLE `movie_likes` (
 --
 
 INSERT INTO `movie_likes` (`id`, `user_id`, `movie_id`) VALUES
-(1, 1, 1),
-(2, 2, 1);
+(2, 2, 1),
+(3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -247,7 +250,7 @@ CREATE TABLE `movie_rates` (
 --
 
 INSERT INTO `movie_rates` (`id`, `user_id`, `movie_id`, `user_rate`) VALUES
-(1, 1, 1, 4),
+(1, 1, 1, 3),
 (2, 2, 1, 3);
 
 -- --------------------------------------------------------
@@ -8354,7 +8357,9 @@ INSERT INTO `orders` (`id`, `user_id`, `email_order`, `phone_order`, `name_order
 (21, NULL, 'nguyenvudaianm113@gmail.com', '0365245602', 'Nguyễn Vũ Đại Nam', 220000, '2025-08-18 02:41:09', 0, 1),
 (22, NULL, 'nguyenvudaianm113@gmail.com', '0365245602', 'Nguyễn Vũ Đại Nam', 240000, '2025-08-18 02:41:53', 0, 1),
 (23, 1, 'nguyenvudaianm113@gmail.com', '0365245602', 'Đại Nam', 200000, '2025-08-18 04:08:05', 0, 0),
-(24, 1, 'nguyenvudaianm113@gmail.com', '0365245602', 'Đại Nam', 200000, '2025-08-18 04:12:01', 0, 1);
+(24, 1, 'nguyenvudaianm113@gmail.com', '0365245602', 'Đại Nam', 200000, '2025-08-18 04:12:01', 0, 1),
+(25, NULL, 'nguyenvudaianm113@gmail.com', '0365245602', 'Nguyễn Vũ Đại Nam', 200000, '2025-08-18 07:21:11', 0, 0),
+(26, 1, 'nguyenvudaianm113@gmail.com', '0365245602', 'Đại Nam', 200000, '2025-08-18 07:43:27', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -8385,7 +8390,11 @@ INSERT INTO `order_details` (`id`, `seat_id`, `order_id`) VALUES
 (30, 30, 23),
 (31, 31, 23),
 (32, 32, 24),
-(33, 33, 24);
+(33, 33, 24),
+(34, 34, 25),
+(35, 35, 25),
+(36, 36, 26),
+(37, 37, 26);
 
 -- --------------------------------------------------------
 
@@ -8419,7 +8428,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('R9ckZPN2524YwJtO5xVIL79niuLpCVqM2ArU26XG', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ1NzRWNuNWNDdkQ0Wk1rVjhCODQ4VUY2YjI5aXc2RUhpY0pBVFRpbiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC90aWNrZXQvbG9va3VwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1755491296);
+('kSeAylwQdc7y4NLVl6aFXyffo7b9VYWdPDooAbBz', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMWdBbllhQ21ZRjRzMFU3RXZnTGd5QWlNNHdabVJGV1ZkcE1WbTZRbiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9jaXRpZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO30=', 1755506840);
 
 -- --------------------------------------------------------
 
@@ -8451,7 +8460,11 @@ INSERT INTO `show_seats` (`id`, `show_id`, `seat_number`, `status_seat`) VALUES
 (30, 3474, 48, 0),
 (31, 3474, 49, 0),
 (32, 4668, 86, 0),
-(33, 4668, 87, 0);
+(33, 4668, 87, 0),
+(34, 3261, 89, 0),
+(35, 3261, 90, 0),
+(36, 3266, 87, 0),
+(37, 3266, 88, 0);
 
 -- --------------------------------------------------------
 
@@ -8565,7 +8578,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `role`, `status`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Đại Nam', 'nguyenvudaianm113@gmail.com', '0365245602', 0, 0, NULL, '$2y$12$05DgJKWXykNPtqv8RVmC1./y9UN1Kc2BnsTIGPFd5V2cmEi1GcbAm', NULL, NULL, NULL),
-(2, 'Nguyễn Vũ Đại Nam', 'nguyenvudaianm115@gmail.com', '0365245602', 0, 0, NULL, '$2y$12$hBNCD92tiVV9BxFiKsrAoeQq0V66dwdWavbdPR1.NruVH9e6jkjDC', NULL, NULL, NULL);
+(2, 'Nguyễn Vũ Đại Nam', 'nguyenvudaianm115@gmail.com', '0365245602', 0, 0, NULL, '$2y$12$hBNCD92tiVV9BxFiKsrAoeQq0V66dwdWavbdPR1.NruVH9e6jkjDC', NULL, NULL, NULL),
+(3, 'admin', 'admin@gmail.com', '0365245602', 1, 0, NULL, '$2y$12$B3jL3kqIfn6DsxNnYmZgNOIYkwEwEaVlJbLoS8UNfpdIlMOgE3wnS', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -8725,7 +8739,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -8755,13 +8769,13 @@ ALTER TABLE `movies`
 -- AUTO_INCREMENT for table `movie_comments`
 --
 ALTER TABLE `movie_comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `movie_likes`
 --
 ALTER TABLE `movie_likes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `movie_rates`
@@ -8785,19 +8799,19 @@ ALTER TABLE `movie_theaters`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `show_seats`
 --
 ALTER TABLE `show_seats`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `theater_companies`
@@ -8815,7 +8829,7 @@ ALTER TABLE `theater_rooms`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

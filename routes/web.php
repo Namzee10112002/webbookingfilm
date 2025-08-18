@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\user\HomeUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -39,3 +42,16 @@ Route::post('/ticket/lookup', [UserTicketController::class, 'search'])->name('ti
  Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
   Route::get('/my-tickets', [UserTicketController::class, 'myTicket'])->name('user.tickets');
+
+
+  Route::prefix('admin')->name('admin.')->group(function() {
+    Route::get('/', [AdminHomeController::class, 'index'])->name('home');
+    
+    Route::get('users', [UserController::class,'index'])->name('users.index');
+    Route::post('users/{user}/toggle-status', [UserController::class,'toggleStatus'])->name('users.toggle-status');
+
+     Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+    Route::post('cities', [CityController::class, 'store'])->name('cities.store');
+    Route::put('cities/{id}', [CityController::class, 'update'])->name('cities.update');
+    Route::post('cities/toggle/{id}', [CityController::class, 'toggleStatus'])->name('cities.toggle');
+});

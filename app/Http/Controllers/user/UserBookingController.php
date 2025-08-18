@@ -20,23 +20,26 @@ class UserBookingController
     // Bước 1: chọn thành phố
     public function selectCity($movieId)
     {
-        $movie = Movie::where('status_movie',0)->findOrFail($movieId);
-        $cities = City::where('status_city',0)->all();
+        $movie = Movie::where('status_movie', 0)->findOrFail($movieId);
+        $cities = City::where('status_city', 0)->all();
         return view('user.pages.select_city', compact('movie', 'cities'));
     }
 
     // Bước 2: hiển thị rạp chiếu trong city
     public function showTheaters(Request $request, $movieId, $cityId)
     {
-        $movie = Movie::where('status_movie',0)->findOrFail($movieId);
-        $city = City::where('status_city',0)->findOrFail($cityId);
-        $companies = TheaterCompany::where('status_company',0)->all();
+        $movie = Movie::where('status_movie', 0)->findOrFail($movieId);
+        $city = City::where('status_city', 0)->findOrFail($cityId);
+        $companies = TheaterCompany::where('status_company', 0)->get();
 
         $date = $request->input('date', Carbon::today()->toDateString());
         // Rạp trong city
         $theaters = MovieTheater::with('company')
             ->where('city_id', $cityId)
             ->where('status_theater', 0)
+            ->whereHas('company', function ($q) {
+                $q->where('status_company', 0);
+            })
             ->get();
 
         foreach ($theaters as $theater) {
@@ -45,7 +48,7 @@ class UserBookingController
                     $q->where('theater_id', $theater->id);
                     $q->where('status_room', 0);
                 })
-                ->where('status_show',0)
+                ->where('status_show', 0)
                 ->whereDate('time_start', $date)
                 ->when($date == Carbon::today()->toDateString(), function ($q) {
                     $q->where('time_start', '>', Carbon::now());
@@ -67,7 +70,15 @@ class UserBookingController
 
     public function chooseSeats($showId)
     {
-        $show = MovieShow::with(['room.theater'])->where('status_show',0)->findOrFail($showId);
+        $show = MovieShow::with(['room.theater'])
+            ->whereHas('room', function ($q) {
+                $q->where('status_room', 0);
+            })
+            ->whereHas('room.theater', function ($q) {
+                $q->where('status_theater', 0);
+            })
+            ->where('status_show', 0)
+            ->findOrFail($showId);
 
         $totalSeats = $show->room->seat;
         $seatsPerRow = 20;
@@ -92,7 +103,11 @@ class UserBookingController
             'payment_method' => 'required|in:0,1',
         ]);
 
-        $show = MovieShow::with('room')->findOrFail($showId);
+        $show = MovieShow::with('room')
+        ->whereHas('room', function ($q) {
+                $q->where('status_room', 0);
+            })
+        ->findOrFail($showId);
 
         // chuyển thành mảng ghế
         $seats = explode(',', $request->seats);
@@ -114,43 +129,43 @@ class UserBookingController
         $totalPrice = count($seats) * $show->price;
 
 
-            // tạo order
-            $order = Order::create([
-                'user_id' => Auth::check() ? Auth::id() : null,
-                'name_order' => $request->name_order,
-                'email_order' => $request->email_order,
-                'phone_order' => $request->phone_order,
-                'total_order' => $totalPrice,
-                'method_pay' => $request->payment_method,
-                'status_order' => 0,
+        // tạo order
+        $order = Order::create([
+            'user_id' => Auth::check() ? Auth::id() : null,
+            'name_order' => $request->name_order,
+            'email_order' => $request->email_order,
+            'phone_order' => $request->phone_order,
+            'total_order' => $totalPrice,
+            'method_pay' => $request->payment_method,
+            'status_order' => 0,
+        ]);
+
+        // lưu ghế + order detail
+        foreach ($seats as $seat) {
+            $showSeat = ShowSeat::create([
+                'show_id' => $showId,
+                'seat_number' => $seat
             ]);
 
-            // lưu ghế + order detail
-            foreach ($seats as $seat) {
-                $showSeat = ShowSeat::create([
-                    'show_id' => $showId,
-                    'seat_number' => $seat
-                ]);
+            OrderDetail::create([
+                'order_id' => $order->id,
+                'show_id' => $showId,
+                'seat_id' => $showSeat->id,
+            ]);
+        }
 
-                OrderDetail::create([
-                    'order_id' => $order->id,
-                    'show_id' => $showId,
-                    'seat_id' => $showSeat->id,
-                ]);
+        DB::commit();
+
+        if ($request->payment_method == 1) {
+            $momoResponse = UserPaymentController::callMomoPayment($totalPrice);
+
+            if (isset($momoResponse['payUrl'])) {
+                return redirect()->route('home')->with('momo_pay_url', $momoResponse['payUrl'])->with('success-order', $order->id);
+            } else {
+                return redirect()->back()->with('error', 'Có lỗi xảy ra khi tạo liên kết thanh toán.');
             }
+        }
 
-            DB::commit();
-
-            if ($request->payment_method == 1) {
-                $momoResponse = UserPaymentController::callMomoPayment($totalPrice);
-
-                if (isset($momoResponse['payUrl'])) {
-                    return redirect()->route('home')->with('momo_pay_url', $momoResponse['payUrl'])->with('success', $order->id);
-                } else{
-                    return redirect()->back()->with('error', 'Có lỗi xảy ra khi tạo liên kết thanh toán.');
-                }
-            }
-
-            return redirect()->route('home')->with('success', 'Đặt vé thành công!');
+        return redirect()->route('home')->with('success', 'Đặt vé thành công!');
     }
 }

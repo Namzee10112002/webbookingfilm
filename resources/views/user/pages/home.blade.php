@@ -104,9 +104,9 @@
         window.open('{{ session('momo_pay_url') }}', '_blank');
     </script>
 @endif
-@if (session('success'))
+@if (session('success-order'))
     <script>
-        alert('Cảm ơn bạn đã đặt vé xem phim của chúng tôi. Đây là mã đơn hàng {{ session('success') }} của bạn hãy đưa mã này cho nhân viên soát vé để được vào ! Bạn cũng có thể tra cứu vé của mình bằng mã này!');
+        alert('Cảm ơn bạn đã đặt vé xem phim của chúng tôi. Đây là mã đơn hàng {{ session('success-order') }} của bạn hãy đưa mã này cho nhân viên soát vé để được vào ! Bạn cũng có thể tra cứu vé của mình bằng mã này!');
     </script>
 @endif
 @endsection
