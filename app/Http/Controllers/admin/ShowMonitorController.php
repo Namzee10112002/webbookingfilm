@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/Admin/ShowMonitorController.php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\MovieShow;
